@@ -8,4 +8,3 @@ module "prod_vpc" {
   public_subnet_az     = "us-east-1a"
   private_subnet_az    = "us-east-1b"
 }
-
