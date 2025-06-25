@@ -1,29 +1,29 @@
 locals {
-  # 1. List of microservice names (source of truth)
+  # Microservice list
   microservice_names = ["shaked", "kattan", "the", "boss"]
 
-  # 2. Default config applied to all
+  # Default settings
   default_settings = {
     instance_type = "t3.micro"
-    ami_id = "ami-0c02fb55956c7d316"
-    subnet_id     = "subnet-02ce9bf40272e9144"
+    ami_id        = "ami-0c02fb55956c7d316"
+    subnet_id     = local.public_subnet_id
     tags = {
       Environment = "prod"
       Owner       = "devops"
     }
   }
 
-  # 3. Optional overrides for specific services
+  # Overrides for specific services
   microservice_overrides = {
     auth = {
       instance_type = "t3.medium"
     }
     orders = {
-     subnet_id = "subnet-02b48a541ffd79d3d"
+      subnet_id = local.private_subnet_id
     }
   }
 
-  # 4. Merged final config
+  # Final merged settings
   microservice_definitions = {
     for name in local.microservice_names :
     name => merge(
@@ -32,16 +32,22 @@ locals {
       { name = name }
     )
   }
-}
 
-module "microservices" {
-  source = "git::https://github.com/shakedkattan/projects.git//terraform/modules/ec2?ref=main"
-  for_each = local.microservice_definitions
+  # Final inputs for module
+  module "microservices" {
+  source   = "git::https://github.com/shakedkattan/projects.git//terraform/modules/ec2?ref=main"
+  for_each = local.microservices_resolved
 
   name                         = each.value.name
-  instance_type               = each.value.instance_type
-  ami_id                      = each.value.ami_id
-  subnet_id                   = each.value.subnet_id
-  tags                        = each.value.tags
-  security_group_ids          = lookup(each.value, "security_group_ids", [])
+  instance_type                = each.value.instance_type
+  ami_id                       = each.value.ami_id
+  subnet_id                    = each.value.subnet_id
+  tags                         = each.value.tags
+  security_group_ids           = each.value.security_group_ids
+  key_name                     = each.value.key_name
+  iam_instance_profile         = each.value.iam_instance_profile
+  associate_public_ip_address  = each.value.associate_public_ip
+  user_data                    = each.value.user_data
+    }
+  }
 }
