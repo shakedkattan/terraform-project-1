@@ -11,10 +11,11 @@ locals {
    # insert more things like iam here
   }
 
-  # Overrides for specific services
+  # Customs for specific services
   microservice_customs = {
     auth = {
       instance_type = "t3.medium"
+      subnet_id = local.public_subnet_id
     }
     orders = {
       subnet_id = local.private_subnet_id
