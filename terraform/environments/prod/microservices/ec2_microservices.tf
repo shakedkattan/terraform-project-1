@@ -1,6 +1,6 @@
 locals {
   # Microservice list
-  microservice_names = ["shaked", "kattan", "the", "boss"]
+  microservice_names = ["shaked", "kattan", "the", "boss", "ssss"]
 
   # Default settings
   default_settings = {
@@ -14,7 +14,7 @@ locals {
   }
 
   # Overrides for specific services
-  microservice_overrides = {
+  microservice_customs = {
     auth = {
       instance_type = "t3.medium"
     }
@@ -28,15 +28,15 @@ locals {
     for name in local.microservice_names :
     name => merge(
       local.default_settings,
-      lookup(local.microservice_overrides, name, {}),
+      lookup(local.microservice_customs, name, {}),
       { name = name }
     )
   }
-
-  # Final inputs for module
-  module "microservices" {
+}
+# Final inputs for module
+module "microservices" {
   source   = "git::https://github.com/shakedkattan/projects.git//terraform/modules/ec2?ref=main"
-  for_each = local.microservices_resolved
+  for_each = local.microservice_definitions
 
   name                         = each.value.name
   instance_type                = each.value.instance_type
@@ -48,6 +48,5 @@ locals {
   iam_instance_profile         = each.value.iam_instance_profile
   associate_public_ip_address  = each.value.associate_public_ip
   user_data                    = each.value.user_data
-    }
   }
 }
