@@ -12,7 +12,7 @@ locals {
   }
 
   # Overrides for specific services
-  microservice_overrides = {
+  microservice_customs = {
     auth = {
       instance_type = "t3.medium"
     }
@@ -26,13 +26,13 @@ locals {
     for name in local.microservice_names :
     name => merge(
       local.default_settings,
-      lookup(local.microservice_overrides, name, {}),
+      lookup(local.microservice_customs, name, {}),
       { name = name }
     )
   }
 
-  # Final inputs for module
-  module "microservices" {
+# Final inputs for module
+module "microservices" {
   source   = "git::https://github.com/shakedkattan/projects.git//terraform/modules/ec2?ref=main"
   for_each = local.microservices_resolved
 
