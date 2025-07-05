@@ -1,6 +1,6 @@
 locals {
   # List of all microservices you want to deploy
-  microservice_names = ["shaked", "kattan", "the", "boss", "ssss"]
+  microservice_names = ["shaked", "kattan", "devops", "engineer"]
 
   # Environment-wide default settings (can override module defaults if needed)
   default_settings = {
@@ -14,12 +14,13 @@ locals {
   # Per-service override map (optional per microservice)
   microservice_customs = {
     shaked = {
-      instance_type = "t3.micro"
-    }
-    kattan = {
       instance_type = "t3.small"
     }
-    the = {
+    kattan = {
+      instance_type = "t3.medium"
+      subnet_id     = local.public_subnet_id
+    }
+    devops = {
       instance_type = "t3.medium"
       subnet_id     = local.private_subnet_id
     }
