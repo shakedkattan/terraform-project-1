@@ -38,7 +38,7 @@ locals {
 }
 
 module "microservices" {
-  source   = "git::https://github.com/shakedkattan/projects.git//terraform/modules/ec2?ref=main"
+  source   = "git::https://github.com/shakedkattan/terraform-project-1.git//terraform/modules/ec2?ref=dev"
   for_each = local.microservice_definitions
 
   name                         = each.value.name

@@ -1,5 +1,5 @@
 module "prod_vpc" {
-  source = "git::https://github.com/shakedkattan/projects.git//terraform/modules/vpc?ref=main"
+  source = "git::https://github.com/shakedkattan/terraform-project-1.git//terraform/modules/vpc?ref=dev"
 
   name                 = "prod"
   vpc_cidr             = "10.0.0.0/16"
