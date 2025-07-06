@@ -47,8 +47,4 @@ module "microservices" {
   subnet_id                    = lookup(each.value, "subnet_id", null)
   tags                         = lookup(each.value, "tags", null)
   security_group_ids           = lookup(each.value, "security_group_ids", null)
-  key_name                     = lookup(each.value, "key_name", null)
-  iam_instance_profile         = lookup(each.value, "iam_instance_profile", null)
-  associate_public_ip_address  = lookup(each.value, "associate_public_ip", null)
-  user_data                    = lookup(each.value, "user_data", null)
 }
