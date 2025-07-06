@@ -9,7 +9,7 @@ terraform {
   }
 
   backend "s3" {
-    bucket = "shakedkattan-tfstate-bucket"
+    bucket = "shakedkattan3-tfstate-bucket"
     key    = "prod/networking.tfstate"
     region = "us-east-1"
   }

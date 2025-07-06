@@ -4,7 +4,6 @@ locals {
 
   # Environment-wide default settings (can override module defaults if needed)
   default_settings = {
-    subnet_id = local.public_subnet_id
     tags = {
       Environment = "prod"
       Owner       = "devops"
