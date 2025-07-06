@@ -1,10 +1,10 @@
 locals {
   backend_config = {
-    bucket = "shakedkattan3-tfstate-bucket"
+    bucket = "shakedkattan-tfstate-bucket"
     region = "us-east-1"
   }
 
-  state_modules = toset(["networking", "ec2",])  # ⬅️ Add other folders as needed
+  state_modules = toset(["networking", "ec2",])  # Add other modules as needed
 }
 
 # Generate one data block per module dynamically
