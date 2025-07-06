@@ -4,7 +4,7 @@ locals {
     region = "us-east-1"
   }
 
-  state_modules = toset(["vpc", "ec2", "iam"])  # ⬅️ Add other folders as needed
+  state_modules = toset(["vpc", "ec2",])  # ⬅️ Add other folders as needed
 }
 
 # Generate one data block per module dynamically
